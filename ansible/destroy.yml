@@ -1,0 +1,7 @@
+---
+- name: "Destroying the virtual machine"
+  hosts: "target"
+  become: true
+
+  roles:
+    - "destroy"

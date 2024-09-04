@@ -1,0 +1,3 @@
+---
+- name: "Preparing the virtual machine with the initial settings"
+  ansible.builtin.import_playbook: "provision.yml"

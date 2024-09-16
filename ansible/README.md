@@ -10,7 +10,7 @@ Name: jump-server
 
 # OS
 Storage: local
-ISO image: ubuntu-22.04.1-desktop-amd64.iso
+ISO image: ubuntu-24.04.1-desktop-amd64.iso
 
 # System
 Qemu Agent: Cheched

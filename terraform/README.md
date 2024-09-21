@@ -1,36 +1,50 @@
-# backup-manager
+# Backup Manager Project
 
-Project with Terraform and Ansible scripts to create an Ubuntu VM on Proxmox from a cloned template to be used as a backup manager.
+This project provides Terraform and Ansible scripts to automate the creation of an Ubuntu VM on Proxmox. The VM is cloned from a template and configured as a backup manager using Minio for object storage. The goal is to centralize and manage backups for all your other VMs.
 
-## Running Terraform
+## Features
 
-Follow these steps on the computer running Terraform:
+- **Proxmox Integration**: Uses Terraform to clone an Ubuntu template and deploy a virtual machine.
+- **Minio Setup**: Automatically installs and configures Minio as an object storage solution to handle backups.
+- **Backup Centralization**: Designed to be the central backup manager for your infrastructure, storing backups from other VMs.
 
-1. **Initialize the Project**
+## Getting Started
 
-   Navigate to the Terraform directory and initialize the project:
+### 1. Terraform Module
 
-   ```bash
-   cd terraform/
-   terraform init
-   ```
+The project uses the following Terraform module to create the Proxmox VM:
 
-2. **Run Terraform to Create the VM**
+- [Terraform Proxmox Ubuntu Module](https://github.com/lsampaioweb/terraform-proxmox-vm-qemu) - This module simplifies the process of creating an Ubuntu virtual machine (server or desktop) on Proxmox VE from a cloned template.
 
-   Use the provided bash script to manage Terraform operations. Below are some example commands:
+### 2. Project Initialization
 
-   ```bash
-   # Plan and apply configurations for the 'home' environment
-   ./tf.sh plan home
-   ./tf.sh apply home -auto-approve
+Navigate to the `terraform/` directory and initialize the Terraform project:
 
-   # Apply configurations for the 'homelab' environment
-   ./tf.sh apply homelab
+```bash
+cd terraform/
+terraform init
+```
 
-   # Destroy the 'home' environment if needed
-   ./tf.sh destroy home
-   ```
+### 3. Create the VM with Terraform
 
-## Created by
+To manage your VM creation and environment operations, use the included bash script `tf.sh`. Below are some example commands:
 
-- Luciano Sampaio
+```bash
+# Plan and apply configurations for the 'home' environment
+./tf.sh plan home
+./tf.sh apply home -auto-approve
+
+# Apply configurations for the 'homelab' environment
+./tf.sh apply homelab
+
+# Destroy the 'home' environment if needed
+./tf.sh destroy home
+```
+
+### 4. Ansible for Post-Provisioning Configuration
+
+After the VM is created, use the provided Ansible playbooks to install and configure Minio. This will allow you to manage and store backups from other VMs effectively.
+
+## Author
+
+**Luciano Sampaio**

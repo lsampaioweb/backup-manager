@@ -1,19 +1,24 @@
-project     = "Backup-Manager"
+project     = "Backup"
 environment = "Production"
 
 vm_instances = {
   "01" = {
+    # Project
+    # state    = "MASTER"
+    # priority = 250
+
     # VM
-    clone       = "ubuntu-24-04-server-standard"
+    target_node = "edge-pve-01"
     vmid        = 1001
     vcpus       = 2
     memory      = 6144
-    startup     = "order=11"
-    description = "VM that will run all the backup jobs."
+    startup     = "order=12"
+    description = "VM that will store the backup for all other VMs."
 
     networks = {
       "01" = {
         bridge = "vmbr102"
+        macaddr = "BC:24:11:82:90:74"
       }
     }
 
@@ -26,7 +31,14 @@ vm_instances = {
         # disk1 (optional)
         scsi1 = {
           disk = [{
-            size    = "15G"
+            size    = "50G"
+            storage = "Ceph_Gold"
+          }]
+        }
+        # disk2 (optional)
+        scsi2 = {
+          disk = [{
+            size    = "50G"
             storage = "Ceph_Gold"
           }]
         }

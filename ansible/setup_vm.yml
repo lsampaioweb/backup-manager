@@ -4,4 +4,4 @@
   become: true
 
   roles:
-    - "destroy"
+    - "setup_vm"

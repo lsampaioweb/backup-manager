@@ -1,83 +1,52 @@
-# Setup the Ubuntu Desktop 22.04 as a jump server for my HomeLab using Ansible
+# Ansible Playbooks
 
-The playbook can setup an Ubuntu Desktop 22.04.
+This repository contains a set of Ansible playbooks to manage the lifecycle of an Ubuntu Server 24.04 virtual machine on Proxmox. The playbooks cover provisioning, setup, application deployment, updates, and destruction of the VM.
 
-1. Create the Virtual Machine (VM) on Proxmox.
-```bash
-# General
-VM ID: 1000
-Name: jump-server
+## Playbooks
 
-# OS
-Storage: local
-ISO image: ubuntu-24.04.1-desktop-amd64.iso
+- **Provision the VM**:
+  This playbook is initiated by Terraform, and automatically calls both the `setup_vm.yml` and `setup_app.yml` playbooks to fully configure the virtual machine and deploy the application.
+  If needed, you can manually run this playbook:
+  ```bash
+  ansible-playbook provision.yml
+  ```
 
-# System
-Qemu Agent: Cheched
+- **Setup the VM**:
+  If something goes wrong with the VM, or you need to reconfigure it, you can run the `setup_vm.yml` playbook independently to apply the necessary configurations:
+  ```bash
+  ansible-playbook setup_vm.yml
+  ```
 
-# Disks
-Storage: local-lvm
-Disk size (GiB): 32
-Discard: checked
-SSD Simulation: checked
-IO thread: checked
+- **Setup the Application**:
+  For updating or redeploying the application on the VM, you can run the `setup_app.yml` playbook directly:
+  ```bash
+  ansible-playbook setup_app.yml
+  ```
 
-# CPU
-Cores: 4
+- **Update the VM**:
+  Apply the latest package updates and security patches to the VM:
+  ```bash
+  ansible-playbook update.yml
+  ```
 
-# Memory
-Memory (MiB) 6144
-Minimum memory (MiB) 2048
+- **Backup the VM**:
+  To create a backup of the server’s files, directories, databases, or system configurations, use the following command:
+  ```bash
+  ansible-playbook backup.yml
+  ```
 
-# Network
-Bridge: vmbr0
-Firewall: unchecked
-```
+- **Restore the VM**:
+  To restore the server’s files, directories, databases, or system configurations from the most recent backup, use the following command:
+  ```bash
+  ansible-playbook restore.yml
+  ```
 
-2. Add some additional settings.
-```bash
-# Hardware
-Display: Standard VGA, memory=32
+- **Destroy the VM**:
+  Typically, this playbook should not be called manually, as Terraform handles VM destruction by calling this playbook when necessary:
+  ```bash
+  ansible-playbook destroy.yml
+  ```
 
-# Options
-Hotplug: Disk, Network
-```
+## Author
 
-3. Run these commands in the terminal of the VM:
-```bash
-# 01 - Change your git config
-# Encode your name and email, in order to avoid spammers, encode them in base64.
-echo "your-name" | base64
-echo "your-email@something.com" | base64
-
-nano ansible/roles/setup_user/vars/main.yml
-# Add your base64 values here.
-git_user_name: "change here"
-git_user_email: "change here"
-
-# 02 - Save your password in the secret manager.
-# The Ansible playbook will need this password in order to run as privileged user.
-secret-tool store --label="local-user-password" password local-user-password
-# To test if the command worked, run:
-secret-tool lookup password "local-user-password"
-# If you get the error message:
-#   "secret-tool: Cannot create an item in a locked collection".
-# Solution:
-#   You should open the Ubuntu Interface (not from the SSH terminal). This will "open/unseal/unlock" the secret manager. This issue will soon be resolved by the Ansible Playbook.
-
-# 03 - Execute the playbook.
-cd ~/git/jump-server/ansible
-ansible-playbook provision.yml
-
-# 04 - Delete the created folders.
-rm -rf ~/git/jump-server/
-```
-
-#
-### Roles you can execute:
-1. [Setup](roles/setup_user/README.md) the jump server with all the default applications and settings.
-
-#
-### Created by:
-
-1. Luciano Sampaio.
+**Luciano Sampaio**

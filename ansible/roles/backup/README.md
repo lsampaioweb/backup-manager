@@ -8,10 +8,8 @@ ansible-playbook backup.yml
 
 ### **Tasks Overview**
 
-1. **Backing Up Data**: This task will create a backup of the specified data on the server. The backup could include files, directories, databases, or system configurations based on the server’s requirements.
+1. **Backing Up Data**: This task will create a backup of the specified data on the server. The backup can include files, directories, databases, or system configurations, depending on the server’s requirements.
 
----
+## Author
 
-### **Author**
-
-- Luciano Sampaio
+**Luciano Sampaio**

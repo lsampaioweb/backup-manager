@@ -4,12 +4,12 @@ environment = "Production"
 vm_instances = {
   "01" = {
     # Project
-    # state    = "MASTER"
-    # priority = 250
+    state    = "MASTER"
+    priority = 250
 
     # VM
     target_node = "edge-pve-01"
-    vmid        = 1001
+    vmid        = 1020
     vcpus       = 2
     memory      = 6144
     startup     = "order=12"
@@ -17,8 +17,8 @@ vm_instances = {
 
     networks = {
       "01" = {
-        bridge = "vmbr102"
-        macaddr = "BC:24:11:82:90:74"
+        bridge  = "vmbr102"
+        macaddr = "5A:53:76:31:AF:8B"
       }
     }
 

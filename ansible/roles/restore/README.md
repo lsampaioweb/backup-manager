@@ -8,10 +8,8 @@ ansible-playbook restore.yml
 
 ### **Tasks Overview**
 
-1. **Restoring Data**: This task will restore the specified data to the server from the most recent backup. It could involve restoring files, directories, databases, or system configurations as required.
-
----
+1. **Restoring Data**: This task will restore the specified data to the server from the most recent backup. It can involve restoring files, directories, databases, or system configurations as needed.
 
 ### **Author**
 
-- Luciano Sampaio
+**Luciano Sampaio**

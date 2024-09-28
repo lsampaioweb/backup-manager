@@ -1,0 +1,50 @@
+{
+  "name": "{{ domain }}",
+  "state": "present",
+  "dns_entry": [
+    {
+      "canonical_name": "",
+      "hostname": "{{ hostname }}",
+      "id": {{ id }},
+      "ip": "{{ public_ip }}",
+      "ipv6": "::",
+      "preference": 10,
+      "status": "enable",
+      "ttl": 0,
+      "type": "A"
+    },
+    {
+      "canonical_name": "",
+      "hostname": "{{ hostname }}",
+      "id": {{ id | int + 1 }},
+      "ip": "{{ public_ip }}",
+      "ipv6": "::",
+      "preference": 10,
+      "status": "enable",
+      "ttl": 0,
+      "type": "PTR"
+    },
+    {
+      "canonical_name": "{{ hostname }}",
+      "hostname": "api.edge-storage-{{ '{:02}'.format(index + 1) }}",
+      "id": {{ id | int + 2 }},
+      "ip": "0.0.0.0",
+      "ipv6": "::",
+      "preference": 10,
+      "status": "enable",
+      "ttl": 0,
+      "type": "CNAME"
+    },
+    {
+      "canonical_name": "{{ hostname }}",
+      "hostname": "edge-storage-{{ '{:02}'.format(index + 1) }}",
+      "id": {{ id | int + 3 }},
+      "ip": "0.0.0.0",
+      "ipv6": "::",
+      "preference": 10,
+      "status": "enable",
+      "ttl": 0,
+      "type": "CNAME"
+    }
+  ]
+}

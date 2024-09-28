@@ -1,0 +1,28 @@
+{
+  "name": "{{ domain }}",
+  "state": "present",
+  "dns_entry": [
+    {
+      "canonical_name": "stg-load-balancer-01",
+      "hostname": "api.edge-storage",
+      "id": 24,
+      "ip": "0.0.0.0",
+      "ipv6": "::",
+      "preference": 10,
+      "status": "enable",
+      "ttl": 0,
+      "type": "CNAME"
+    },
+    {
+      "canonical_name": "stg-load-balancer-01",
+      "hostname": "edge-storage",
+      "id": 25,
+      "ip": "0.0.0.0",
+      "ipv6": "::",
+      "preference": 10,
+      "status": "enable",
+      "ttl": 0,
+      "type": "CNAME"
+    }
+  ]
+}

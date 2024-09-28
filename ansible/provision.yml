@@ -1,6 +1,9 @@
 ---
-- name: "Preparing the virtual machine with the initial settings"
+- name: "Importing DNS entries setup playbook"
+  ansible.builtin.import_playbook: "firewall.yml"
+
+- name: "Importing initial settings setup playbook for the virtual machine"
   ansible.builtin.import_playbook: "setup_vm.yml"
 
-- name: "Setting up the Application"
+- name: "Importing application setup playbook"
   ansible.builtin.import_playbook: "setup_app.yml"

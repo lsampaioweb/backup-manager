@@ -1,0 +1,27 @@
+---
+- name: "Collecting all target hosts from master and backup groups"
+  ansible.builtin.set_fact:
+    all_target_hosts: "{{ groups['target'] }}"
+    first_index: 100
+
+- name: "Including DNS entry creation tasks for dynamic entries"
+  ansible.builtin.include_role:
+    name: "common"
+    tasks_from: "fortigate/dns/entry.yml"
+  vars:
+    id: "{{ first_index + (index * 4) }}"
+    current_host: "{{ item }}"
+    hostname: "{{ hostvars[current_host].hostname }}"
+    public_ip: "{{ hostvars[current_host].public_ip }}"
+
+    desired_settings: "{{ lookup('template', 'dns_entry_dynamic.j2') }}"
+  loop: "{{ all_target_hosts | default([]) }}"
+  loop_control:
+    index_var: "index"
+
+- name: "Including DNS entry creation tasks for static entries"
+  ansible.builtin.include_role:
+    name: "common"
+    tasks_from: "fortigate/dns/entry.yml"
+  vars:
+    desired_settings: "{{ lookup('template', 'dns_entry_static.j2') }}"

@@ -1,7 +1,8 @@
 ---
-- name: "Preparing the virtual machine with some settings"
-  hosts: "target"
-  become: true
+- name: "Delete configurations related to the Virtual Machine"
+  ansible.builtin.import_playbook: "destroy_vm.yml"
 
-  roles:
-    - "destroy"
+- name: "Delete firewall configurations related to the Virtual Machine"
+  ansible.builtin.import_playbook: "firewall.yml"
+  vars:
+    member_state: "absent"

@@ -17,8 +17,7 @@ vm_instances = {
 
     networks = {
       "01" = {
-        bridge  = "vmbr102"
-        macaddr = "5A:53:76:31:AF:8B"
+        bridge = "vmbr102"
       }
     }
 
@@ -43,9 +42,9 @@ vm_instances = {
           }]
         }
         # cloud-init disk (optional)
-        scsi10 = {
-          cloudinit = [{}]
-        }
+        # scsi10 = {
+        #   cloudinit = [{}]
+        # }
       }
     }
   }

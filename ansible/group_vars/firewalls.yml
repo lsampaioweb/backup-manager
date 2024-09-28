@@ -1,0 +1,17 @@
+---
+# The name of the user that Ansible will use to connect to the firewall.
+ansible_user: "admin"
+
+# Extracts the inventory hostname without the domain suffix.
+# Useful to get a short version of the hostname by removing the domain from the fully qualified domain name (FQDN).
+inventory_hostname_without_domain: "{{ inventory_hostname | replace('.' + domain, '') }}"
+
+# The ID of the password stored in a secret manager.
+# Constructs a unique identifier for the password by appending '-admin-password' to the hostname without the domain.
+# Ensures that each firewall has its own unique password ID.
+ansible_password_id: "{{ inventory_hostname_without_domain ~ '-admin-password' }}"
+
+# Retrieves the password for the user using a secret manager.
+# Looks up the password using a command that queries the secret manager (in this case, 'secret-tool').
+# The password is securely fetched based on the ID constructed in the previous variable.
+ansible_password: "{{ lookup('pipe', 'secret-tool lookup password ' + ansible_password_id) }}"

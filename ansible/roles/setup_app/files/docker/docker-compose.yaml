@@ -1,0 +1,46 @@
+# Define the services to be deployed
+services:
+  # MinIO service configuration
+  minio:
+    # Use the custom MinIO image from a private registry
+    image: "minio/minio:latest"
+
+    # Name of the container
+    container_name: "minio"
+
+    # Restart policy for the container
+    restart: "unless-stopped"
+
+    # Environment variables for MinIO configuration
+    environment:
+      # Path to the MinIO configuration file
+      - "MINIO_CONFIG_ENV_FILE=/etc/default/minio"
+      # Root password for MinIO, fetched from environment variables
+      - "MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}"
+
+    # Mount volumes into the container
+    volumes:
+      # Ensure container uses the host's timezone settings
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+      # Mount the MinIO configuration file directory
+      - "./config/minio:/etc/default/minio:ro"
+      # Mount directories for data storage across two disks
+      - "/mnt/data/disk1:/mnt/data/disk1"
+      - "/mnt/data/disk2:/mnt/data/disk2"
+
+    # Command to start the MinIO server with API and Web console ports
+    command: "minio server --address :9000 --console-address :9001"
+
+    # # Health check configuration to ensure the container is healthy
+    # healthcheck:
+    #   # Command to check if MinIO is ready using mc (MinIO client)
+    #   test: ["CMD", "mc", "ready", "local"]
+    #   # Time to wait before starting the health checks
+    #   start_period: "5s"
+    #   # Interval between health checks
+    #   interval: "10s"
+    #   # Timeout for each health check
+    #   timeout: "2s"
+    #   # Number of retries before marking the container as unhealthy
+    #   retries: 2

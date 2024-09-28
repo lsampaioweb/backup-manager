@@ -1,10 +1,30 @@
----
-# vgs:
-#   - name: "ubuntu_vg"
-#     disks:
-#       - "/dev/sda3"
-#       - "/dev/sdb1"
-#     lvm:
-#       - { name: "root_lvm", size: "12G", filesystem_type: "ext4" }
-#       - { name: "var_lvm", size: "12G", filesystem_type: "ext4" }
-#       - { name: "home_lvm", size: "+100%FREE", filesystem_type: "ext4" }
+# Definition of volume groups (VGs) with associated disks and logical volumes (LVMs)
+vgs:
+  # Volume Group for Ubuntu OS, using the third partition of the first disk
+  - name: "ubuntu_vg"
+    disks:
+      # The OS is installed here, so this VG has LVMs for system directories like root, var, and home.
+      - "/dev/sda3"
+    lvm:
+      # Root filesystem for /
+      - { name: "root_lvm", size: "9G", filesystem_type: "ext4" }
+      # Separate volume for /var
+      - { name: "var_lvm", size: "5G", filesystem_type: "ext4" }
+      # Separate volume for /home
+      - { name: "home_lvm", size: "5G", filesystem_type: "ext4" }
+
+  # Volume Group for Minio storage, using two disks, which will be treated as one storage pool
+  - name: "storage_vg"
+    disks:
+      # First data disk for Minio
+      - "/dev/sdb1"
+      # Second data disk for Minio
+      - "/dev/sdc1"
+    lvm:
+      # Single logical volume for all available storage
+      - { name: "storage_lvm", size: "+100%FREE", filesystem_type: "ext4" }
+
+# Mounts configuration to mount the logical volume (LVM) to a specific path
+mounts:
+  # Mounting the entire 'storage_lvm' to /mnt/data for Minio to access
+  - { path: "/mnt/data", src: "/dev/storage_vg/storage_lvm" }

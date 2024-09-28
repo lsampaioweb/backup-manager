@@ -17,8 +17,7 @@ vm_instances = {
 
     networks = {
       "01" = {
-        bridge  = "vmbr102"
-        macaddr = "5A:53:76:31:AF:8B"
+        bridge = "vmbr102"
       }
     }
 

@@ -1,0 +1,7 @@
+---
+- name: "Delete configurations related to the Virtual Machine"
+  hosts: "target"
+  become: true
+
+  roles:
+    - "destroy"

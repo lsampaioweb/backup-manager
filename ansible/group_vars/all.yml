@@ -1,4 +1,6 @@
 ---
+# The domain name used in your local network or homelab environment.
+# This will be appended to hostnames for full DNS resolution.
 domain: "lan.homelab"
 
 # Import Paths.

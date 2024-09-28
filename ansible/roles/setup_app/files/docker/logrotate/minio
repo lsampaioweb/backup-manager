@@ -1,0 +1,29 @@
+# Path to the MinIO log files to rotate
+/opt/docker/minio/log/*.log {
+  # Rotate logs daily
+  daily
+
+  # Do not raise an error if the log file is missing
+  missingok
+
+  # Do not rotate empty log files
+  notifempty
+
+  # Keep 7 days of old log files (change this as per your needs)
+  rotate 7
+
+  # Set file permissions for new log files: 0644 (owner read/write, group and others read)
+  # Owned by root user and root group
+  create 0644 root root
+
+  # Compress old log files to save space
+  compress
+
+  # Execute the post-rotation script only once, even if multiple logs are rotated
+  sharedscripts
+
+  # Post-rotation script: find and delete log files older than 7 days
+  postrotate
+    find /opt/docker/minio/log/ -name "*.log" -mtime +7 -exec rm {} \;
+  endscript
+}

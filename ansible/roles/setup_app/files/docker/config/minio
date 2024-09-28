@@ -1,13 +1,16 @@
-MINIO_VOLUMES="/mnt/data/disk{1...2}/minio"
-# MINIO_OPTS="--address :9000 --console-address :9001"
+# MinIO Volume Setup
+MINIO_VOLUMES="/data"
+# MINIO_VOLUMES="/data-{1...2}"
+
+# MinIO root credentials
 MINIO_ROOT_USER="edge-storage-01-admin"
-# MINIO_ROOT_PASSWORD="In Keychain: "edge-minio-01-admin""
 
-# S3-API
-# MINIO_SERVER_URL="https://api.edge-storage-01.lan.homelab"
+# --certs-dir /etc/minio
 
-# Console
-MINIO_BROWSER_REDIRECT_URL="https://edge-storage-01.lan.homelab"
+# Web Console Configuration
+MINIO_BROWSER_REDIRECT_URL="http://edge-storage-01.lan.homelab:9001"
+# MINIO_BROWSER_REDIRECT_URL="https://edge-storage-01.lan.homelab"
 
-#MINIO_PROMETHEUS_URL="http://localhost:9090"
-#MINIO_PROMETHEUS_JOB_ID="minio-01-job"
+# Optional: Prometheus metrics configuration
+# MINIO_PROMETHEUS_URL="http://localhost:9090"
+# MINIO_PROMETHEUS_JOB_ID="minio-01-job"

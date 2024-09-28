@@ -36,13 +36,13 @@
 
 04 - Creating the MinIO User, Group, Data Directory, and Environment File.
   # The -r flag instructs the command to make the group a system group.
-    sudo groupadd -r minio-user
+    sudo groupadd -r usr_minio
 
   Create the user that the MinIO server will run as.
   # The -M flag instructs the command not to create a home directory for the user.
   # The -r flag creates a system user.
   # The -g flag assigns the user to its primary group.
-    sudo useradd -M -r -g minio-user minio-user
+    sudo useradd -M -r -g usr_minio usr_minio
 
   Move MinIO’s environment file:
     sudo mv ~/install-minio/01-Server/files/minio-01.conf /etc/minio/minio.conf
@@ -51,9 +51,9 @@
     Edit the file and add the specific config for the VM.
 
   Give ownership of the data directory to the MinIO user and group.
-    sudo chown -R minio-user:minio-user /mnt/minio &&
-    sudo chown -R minio-user:minio-user /etc/minio &&
-    sudo chown -R minio-user:minio-user /var/log/minio
+    sudo chown -R usr_minio:usr_minio /mnt/minio &&
+    sudo chown -R usr_minio:usr_minio /etc/minio &&
+    sudo chown -R usr_minio:usr_minio /var/log/minio
 
 05 — Starting the MinIO Server
   Move MinIO’s environment file:

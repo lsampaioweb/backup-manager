@@ -15,7 +15,7 @@
   Adjust the permissions.
     sudo mkdir -p /etc/minio/web/ &&
     sudo mv ~/minio/02-Frontend/files/{*.crt,*.key} /etc/minio/web/ &&
-    sudo chown -R www-data:minio-user /etc/minio/web &&
+    sudo chown -R www-data:usr_minio /etc/minio/web &&
     sudo chmod 640 /etc/minio/web/*.key
 
   Copy the conf file.

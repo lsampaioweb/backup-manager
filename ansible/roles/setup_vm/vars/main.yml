@@ -7,11 +7,11 @@ vgs:
       - "/dev/sda3"
     lvm:
       # Root filesystem for /
-      - { name: "root_lvm", size: "9G", filesystem_type: "ext4" }
+      - { name: "root_lvm", size: "9G", fstype: "ext4" }
       # Separate volume for /var
-      - { name: "var_lvm", size: "5G", filesystem_type: "ext4" }
+      - { name: "var_lvm", size: "5G", fstype: "ext4" }
       # Separate volume for /home
-      - { name: "home_lvm", size: "5G", filesystem_type: "ext4" }
+      - { name: "home_lvm", size: "5G", fstype: "ext4" }
 
   # Volume Group for Minio storage, using two disks, which will be treated as one storage pool
   - name: "storage_vg"
@@ -22,9 +22,9 @@ vgs:
       - "/dev/sdc1"
     lvm:
       # Single logical volume for all available storage
-      - { name: "storage_lvm", size: "+100%FREE", filesystem_type: "ext4" }
+      - { name: "storage_lvm", size: "+100%FREE", fstype: "xfs", opts: "defaults,noatime" }
 
 # Mounts configuration to mount the logical volume (LVM) to a specific path
 mounts:
   # Mounting the entire 'storage_lvm' to /mnt/data for Minio to access
-  - { path: "/mnt/data", src: "/dev/storage_vg/storage_lvm" }
+  - { path: "/mnt/data", src: "/dev/storage_vg/storage_lvm", fstype: "xfs" }

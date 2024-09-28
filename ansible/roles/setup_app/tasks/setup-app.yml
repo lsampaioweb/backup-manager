@@ -11,12 +11,12 @@
     dest: "{{ app_path }}"
     mode: "preserve"
 
-- name: "Copying the application's SSL Certificate to the target"
-  ansible.builtin.copy:
-    src: "{{ item }}"
-    dest: "{{ certificates_dest_path }}"
-    mode: "preserve"
-  loop: "{{ certificates | default([]) }}"
+# - name: "Copying the application's SSL Certificate to the target"
+#   ansible.builtin.copy:
+#     src: "{{ item }}"
+#     dest: "{{ certificates_dest_path }}"
+#     mode: "preserve"
+#   loop: "{{ certificates | default([]) }}"
 
 # - name: "Copying logrotate config"
 #   ansible.builtin.copy:
@@ -31,6 +31,16 @@
 #   ansible.builtin.command:
 #     cmd: "logrotate {{ logrotate_dest_path }}/minio"
 #     creates: "/var/lib/logrotate/status"
+
+- name: "Ensuring the directories that Minio will use exist"
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: "directory"
+    mode: "0755"
+  loop:
+    - "/mnt/data"
+    # - "/mnt/data/disk1"
+    # - "/mnt/data/disk2"
 
 # - name: "Creating external Docker network for reverse proxy"
 #   community.docker.docker_network:

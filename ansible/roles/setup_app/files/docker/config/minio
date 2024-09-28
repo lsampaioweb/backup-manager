@@ -5,11 +5,9 @@ MINIO_VOLUMES="/data"
 # MinIO root credentials
 MINIO_ROOT_USER="edge-storage-01-admin"
 
-# --certs-dir /etc/minio
-
 # Web Console Configuration
-MINIO_BROWSER_REDIRECT_URL="http://edge-storage-01.lan.homelab:9001"
-# MINIO_BROWSER_REDIRECT_URL="https://edge-storage-01.lan.homelab"
+# MINIO_BROWSER_REDIRECT_URL="http://edge-storage-01.lan.homelab:9001"
+MINIO_BROWSER_REDIRECT_URL="https://edge-storage-01.lan.homelab"
 
 # Optional: Prometheus metrics configuration
 # MINIO_PROMETHEUS_URL="http://localhost:9090"

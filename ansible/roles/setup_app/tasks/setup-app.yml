@@ -11,26 +11,12 @@
     dest: "{{ app_path }}"
     mode: "preserve"
 
-# - name: "Copying the application's SSL Certificate to the target"
-#   ansible.builtin.copy:
-#     src: "{{ item }}"
-#     dest: "{{ certificates_dest_path }}"
-#     mode: "preserve"
-#   loop: "{{ certificates | default([]) }}"
-
-# - name: "Copying logrotate config"
-#   ansible.builtin.copy:
-#     remote_src: true
-#     src: "{{ logrotate_src_path }}/minio"
-#     dest: "{{ logrotate_dest_path }}/minio"
-#     owner: "root"
-#     group: "root"
-#     mode: "0644"
-
-# - name: "Ensuring logrotate is enabled and running"
-#   ansible.builtin.command:
-#     cmd: "logrotate {{ logrotate_dest_path }}/minio"
-#     creates: "/var/lib/logrotate/status"
+- name: "Copying the application's SSL Certificate to the target"
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "preserve"
+  loop: "{{ certificates | default([]) }}"
 
 - name: "Ensuring the directories that Minio will use exist"
   ansible.builtin.file:
@@ -39,19 +25,10 @@
     mode: "0755"
   loop:
     - "/mnt/data"
-    # - "/mnt/data/disk1"
-    # - "/mnt/data/disk2"
 
-# - name: "Creating external Docker network for reverse proxy"
-#   community.docker.docker_network:
-#     name: "{{ item.name }}"
-#     driver: "{{ item.driver }}"
-#     state: "{{ item.state | default('present', true) }}"
-#   loop: "{{ networks | default([]) }}"
-
-# - name: "Creating and starting services (docker-compose up)"
-#   community.docker.docker_compose_v2:
-#     project_name: "storage"
-#     project_src: "{{ app_path }}"
-#     # This will apply changes without restarting the containers unnecessarily.
-#     state: "present"
+- name: "Creating and starting services (docker-compose up)"
+  community.docker.docker_compose_v2:
+    project_name: "storage"
+    project_src: "{{ app_path }}"
+    # This will apply changes without restarting the containers unnecessarily.
+    state: "present"

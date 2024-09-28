@@ -8,27 +8,13 @@ app_path: "{{ docker_base_path }}/minio"
 # Destination path where SSL certificates will be copied on the target host
 certificates_dest_path: "{{ app_path }}/certificates"
 
-# Source path for logrotate configuration files (assumed to be part of the application files)
-logrotate_src_path: "{{ app_path }}/logrotate"
+# Base source directory where certificates are stored on the control node
+certificates_base_path: "/opt/certificates"
 
-# Destination path for logrotate configuration on the target host
-logrotate_dest_path: "/etc/logrotate.d"
+# Path to the certificate of the application
+certificate_path: "{{ certificates_base_path }}/edge-storage.lan.homelab"
 
-# # Base source directory where certificates are stored on the control node
-# certificates_base_path: "/opt/certificates"
-
-# # Path to the root CA certificate file on the control node
-# certificate_ca_path: "{{ certificates_base_path }}/ca.lan.homelab"
-
-# # Path to the wildcard certificate files for the load balancer on the control node
-# certificate_path: "{{ certificates_base_path }}/storage.lan.homelab"
-
-# # List of certificates to copy to the target host (includes CA and storage certs)
-# certificates:
-#   - "{{ certificate_ca_path }}/ca.lan.homelab.crt"
-#   - "{{ certificate_path }}/storage.lan.homelab.crt"
-#   - "{{ certificate_path }}/storage.lan.homelab.key"
-
-# Docker networks to create; currently includes the reverse-proxy network with the bridge driver
-networks:
-  - { name: "reverse-proxy", driver: "bridge" }
+# List of certificates to copy to the target host (includes CA and storage certs)
+certificates:
+  - { src: "{{ certificate_path }}/edge-storage.lan.homelab.crt", dest: "{{ certificates_dest_path }}/public.crt" }
+  - { src: "{{ certificate_path }}/edge-storage.lan.homelab.key", dest: "{{ certificates_dest_path }}/private.key" }

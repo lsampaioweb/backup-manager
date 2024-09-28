@@ -14,7 +14,7 @@ services:
     # Environment variables for MinIO configuration
     environment:
       # Path of the config file
-      - "MINIO_CONFIG_ENV_FILE=/etc/default/minio"
+      - "MINIO_CONFIG_ENV_FILE=/etc/minio/config"
       # Root password for MinIO, fetched from environment variables
       - "MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}"
 
@@ -31,24 +31,24 @@ services:
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
       # Mount the MinIO configuration file directory
-      - "./config/minio:/etc/default/minio:ro"
+      - "./config/minio:/etc/minio/config:ro"
+      # Mount certificates
+      - "./certificates/:/etc/minio/certs/"
       # Mount directories for data storage
       - "/mnt/data:/data"
-      # - "/mnt/data/disk1:/data-1"
-      # - "/mnt/data/disk2:/data-2"
 
     # Command to start the MinIO server with API and Web console ports
-    command: "minio server --address :9000 --console-address :9001"
+    command: "minio server --address :9000 --console-address :9001 --certs-dir /etc/minio/certs/"
 
     # Health check configuration to ensure the container is healthy
-    healthcheck:
-      # Command to check if MinIO is ready using mc (MinIO client)
-      test: ["CMD", "mc", "ready", "local"]
-      # Time to wait before starting the health checks
-      start_period: "5s"
-      # Interval between health checks
-      interval: "10s"
-      # Timeout for each health check
-      timeout: "2s"
-      # Number of retries before marking the container as unhealthy
-      retries: 2
+    # healthcheck:
+    #   # Command to check if MinIO is ready using mc (MinIO client)
+    #   test: ["CMD", "mc", "ready", "local"]
+    #   # Time to wait before starting the health checks
+    #   start_period: "5s"
+    #   # Interval between health checks
+    #   interval: "10s"
+    #   # Timeout for each health check
+    #   timeout: "2s"
+    #   # Number of retries before marking the container as unhealthy
+    #   retries: 2

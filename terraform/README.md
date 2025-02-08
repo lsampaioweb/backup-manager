@@ -45,6 +45,7 @@ To manage your VM creation and environment operations, use the included bash scr
 
 After the VM is created, use the provided Ansible playbooks to install and configure Minio. This will allow you to manage and store backups from other VMs effectively.
 
-## Author
+#
+### Created by:
 
-**Luciano Sampaio**
+1. Luciano Sampaio.

@@ -12,4 +12,4 @@ ansible-playbook restore.yml
 
 ### **Author**
 
-**Luciano Sampaio**
+1. Luciano Sampaio.

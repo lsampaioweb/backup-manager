@@ -1,4 +1,6 @@
 galaxy_info:
+  role_name: backup
+  namespace: lsampaioweb
   author: Luciano Sampaio
   description: Backing up the virtual machine data.
 

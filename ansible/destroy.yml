@@ -1,8 +1,8 @@
 ---
-- name: "Delete configurations related to the Virtual Machine"
+- name: "Deleting configurations related to the Virtual Machine"
   ansible.builtin.import_playbook: "destroy_vm.yml"
 
-- name: "Delete firewall configurations related to the Virtual Machine"
+- name: "Deleting firewall configurations related to the Virtual Machine"
   ansible.builtin.import_playbook: "firewall.yml"
   vars:
     member_state: "absent"

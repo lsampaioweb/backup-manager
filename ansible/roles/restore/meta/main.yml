@@ -1,4 +1,6 @@
 galaxy_info:
+  role_name: restore
+  namespace: lsampaioweb
   author: Luciano Sampaio
   description: Restoring the virtual machine
 
